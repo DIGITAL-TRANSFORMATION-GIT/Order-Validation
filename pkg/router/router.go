@@ -19,5 +19,5 @@ func (a *RouterInstance) RegisterHandler(Path string, Handler func(w http.Respon
 }
 
 func (a *RouterInstance) Start(Port string) {
-	http.ListenAndServe(Port, a.Router)
+	http.ListenAndServe(":"+Port, a.Router)
 }
