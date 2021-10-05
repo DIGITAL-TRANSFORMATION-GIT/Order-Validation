@@ -1,7 +1,5 @@
 package config
 
-import "os"
-
 type databaseConfig struct {
 	Username     string
 	Password     string
@@ -11,14 +9,15 @@ type databaseConfig struct {
 
 func LoadDatabaseConfiguration() (databaseConfig, error) {
 	var result databaseConfig
-	result.Username = os.Getenv("USER_NAME")
-	result.Password = os.Getenv("PASSWORD")
-	result.Address = os.Getenv("ADRESS")
-	result.Address = os.Getenv("DATABASE_NAME")
+	result.Username = "root"
+	result.Password = "password"
+	result.Address = "127.0.0.1"
+	result.DatabaseName = "orderValidator"
 	return result, nil
 
 }
 
 func LoadPort() string {
-	return os.Getenv("PORT")
+	// return os.Getenv("PORT")
+	return "8080"
 }
