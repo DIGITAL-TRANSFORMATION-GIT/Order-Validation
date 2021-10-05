@@ -1,5 +1,7 @@
 package config
 
+import "os"
+
 type databaseConfig struct {
 	Username     string
 	Password     string
@@ -18,6 +20,6 @@ func LoadDatabaseConfiguration() (databaseConfig, error) {
 }
 
 func LoadPort() string {
-	// return os.Getenv("PORT")
-	return "8080"
+	return os.Getenv("PORT")
+	// return "8080"
 }
