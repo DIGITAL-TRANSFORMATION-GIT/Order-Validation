@@ -2,7 +2,6 @@ package database
 
 import (
 	"database/sql"
-	mysql "delivery-validation/pkg/database/mysql"
 	"errors"
 	"fmt"
 	"log"
@@ -21,8 +20,8 @@ func NewDatabase(DatabaseManagementSystem string, Username string, Password stri
 	var DB *sql.DB
 	var err error
 	switch strings.ToLower(DatabaseManagementSystem) {
-	case "mysql":
-		DB, err = mysql.Connect(fmt.Sprintf("%s:%s@tcp(%s)/%s", Username, Password, Address, DatabaseName))
+	case "postgres":
+		DB, err = sql.Connect(fmt.Sprintf("%s:%s@tcp(%s)/%s", Username, Password, Address, DatabaseName))
 		if err != nil {
 			return nil, err
 		}

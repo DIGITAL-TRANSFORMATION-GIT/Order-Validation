@@ -33,7 +33,7 @@ func main() {
 
 	}
 
-	database, err := database.NewDatabase("Mysql",
+	database, err := database.NewDatabase("postgres",
 		databaseConfig.Username, databaseConfig.Password, databaseConfig.Address,
 		databaseConfig.DatabaseName)
 
