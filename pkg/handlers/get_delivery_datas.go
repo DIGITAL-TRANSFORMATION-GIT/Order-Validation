@@ -10,6 +10,8 @@ import (
 
 func (h *HTTPHandler) GetStatusOfAllOrders(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
 	retrievedData, err := h.database.RetrieveData("SELECT * FROM orders;")
 	if err != nil {
 		h.logger.ErrorLogger.Println("Can't retrieve news from SQL: ", err.Error())
@@ -25,6 +27,8 @@ func (h *HTTPHandler) GetStatusOfOrder(w http.ResponseWriter, r *http.Request) {
 	request := mux.Vars(r)
 	id := request["id"]
 	w.Header().Set("Content-Type", "application/json")
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
 	retrievedData, err := h.database.RetrieveData(fmt.Sprintf("SELECT * FROM orders where id = %s;", id))
 	if err != nil {
 		h.logger.ErrorLogger.Println("Can't retrieve news from SQL: ", err.Error())

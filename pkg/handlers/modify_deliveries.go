@@ -12,6 +12,8 @@ import (
 
 func (h *HTTPHandler) AddNewOrder(w http.ResponseWriter, r *http.Request) {
 	h.logger.InfoLogger.Println("New order received")
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
 	var order models.Orders
 	req, err := ioutil.ReadAll(r.Body)
 	if err != nil {
@@ -34,6 +36,8 @@ func (h *HTTPHandler) PostUpdateOnDelivery(w http.ResponseWriter, r *http.Reques
 	request := mux.Vars(r)
 	id := request["id"]
 	w.Header().Set("Content-Type", "application/json")
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
 	var form models.ProgressForm
 	req, err := ioutil.ReadAll(r.Body)
 	if err != nil {
