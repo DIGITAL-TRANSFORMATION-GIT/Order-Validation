@@ -42,7 +42,7 @@ func (h *HTTPHandler) insertOrderAndRetrieveID(newOrder models.Orders) int {
 	id := h.assignIdToOrder()
 	h.database.AddData(fmt.Sprintf("INSERT INTO orders (id, title) VALUES (%d,'%s');", id, newOrder.Title))
 	for _, requirement := range newOrder.Requirements {
-		h.database.AddData(fmt.Sprintf("INSERT INTO requirements (request,expectedoutcome,order_id,status) VALUES ('%s', '%s', %d, 0)",
+		h.database.AddData(fmt.Sprintf("INSERT INTO requirements (request,expectedoutcome,order_id,status) VALUES ('%s', '%s', %d, '0')",
 			requirement.Request, requirement.ExpectedOutcome, id))
 	}
 	return id
