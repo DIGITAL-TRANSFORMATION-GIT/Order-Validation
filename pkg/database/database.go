@@ -43,7 +43,6 @@ func (a *DBInstance) UpdateData(Query string) error {
 	_, err := a.db.Query(Query)
 	a.db.Query("SET SQL_SAFE_UPDATES = 1;")
 	return err
-
 }
 
 func (a *DBInstance) DeleteData(Query string) error {
