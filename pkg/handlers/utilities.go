@@ -42,7 +42,7 @@ func (h *HTTPHandler) insertOrderAndRetrieveID(newOrder models.Orders) int {
 	id := h.assignIdToOrder()
 	h.database.AddData(fmt.Sprintf("INSERT INTO orders (id, title) VALUES (%d,'%s');", id, newOrder.Title))
 	for _, requirement := range newOrder.Requirements {
-		h.database.AddData(fmt.Sprintf("INSERT INTO requirements (request,expectedoutcome,order_id,status) VALUES ('%s', '%s', %d, 0)",
+		h.database.AddData(fmt.Sprintf("INSERT INTO requirements (request,expectedoutcome,order_id,status) VALUES ('%s', '%s', %d, '0');",
 			requirement.Request, requirement.ExpectedOutcome, id))
 	}
 	return id
@@ -87,14 +87,14 @@ func (h *HTTPHandler) validateRequirements(id string, form models.ProgressForm) 
 }
 
 func (h *HTTPHandler) statusComplete(requirementID int) {
-	if err := h.database.UpdateData(fmt.Sprintf("UPDATE requirements SET status = 1 WHERE requirementid = %d;",
+	if err := h.database.UpdateData(fmt.Sprintf("UPDATE requirements SET status = '1' WHERE requirementid = %d;",
 		requirementID)); err != nil {
 		h.logger.ErrorLogger.Println("Can't modify database : ", err.Error())
 	}
 }
 
 func (h *HTTPHandler) statusIncomplete(requirementID int) {
-	if err := h.database.UpdateData(fmt.Sprintf("UPDATE requirements SET status = 0 WHERE requirementid = %d;",
+	if err := h.database.UpdateData(fmt.Sprintf("UPDATE requirements SET status =' 0' WHERE requirementid = %d;",
 		requirementID)); err != nil {
 		h.logger.ErrorLogger.Println("Can't modify database : ", err.Error())
 	}
