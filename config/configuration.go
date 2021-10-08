@@ -9,15 +9,15 @@ type databaseConfig struct {
 	DatabaseName string
 }
 
-func LoadDatabaseConfiguration() (databaseConfig, error) {
-	var result databaseConfig
-	result.Username = "root"
-	result.Password = "password"
-	result.Address = "127.0.0.1"
-	result.DatabaseName = "orderValidator"
-	return result, nil
+// func LoadDatabaseConfiguration() (databaseConfig, error) {
+// 	var result databaseConfig
+// 	result.Username = "root"
+// 	result.Password = "password"
+// 	result.Address = "127.0.0.1"
+// 	result.DatabaseName = "orderValidator"
+// 	return result, nil
 
-}
+// }
 
 func LoadPort() string {
 	return os.Getenv("PORT")

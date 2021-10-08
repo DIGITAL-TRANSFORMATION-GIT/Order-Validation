@@ -26,16 +26,14 @@ func main() {
 	//initializing db and router
 	logger.InfoLogger.Println("Initializing Program")
 
-	databaseConfig, err := config.LoadDatabaseConfiguration()
-	if err != nil {
-		log.Printf("Error setting database : %s\n", err.Error())
-		return
+	// databaseConfig, err := config.LoadDatabaseConfiguration()
+	// if err != nil {
+	// 	log.Printf("Error setting database : %s\n", err.Error())
+	// 	return
 
-	}
+	// }
 
-	database, err := database.NewDatabase("postgres",
-		databaseConfig.Username, databaseConfig.Password, databaseConfig.Address,
-		databaseConfig.DatabaseName)
+	database, err := database.NewDatabase("postgres")
 
 	if err != nil {
 		log.Printf("Error received : %s\n", err.Error())

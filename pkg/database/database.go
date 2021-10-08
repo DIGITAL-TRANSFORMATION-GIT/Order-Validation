@@ -17,12 +17,14 @@ type RetrievedData struct {
 	Data *sql.Rows
 }
 
-func NewDatabase(DatabaseManagementSystem string, Username string, Password string, Address string, DatabaseName string) (*DBInstance, error) {
+//, Username string, Password string, Address string, DatabaseName string
+func NewDatabase(DatabaseManagementSystem string) (*DBInstance, error) {
 	var DB *sql.DB
 	var err error
 	switch strings.ToLower(DatabaseManagementSystem) {
 	case "postgres":
-		DB, err = mysql.Connect(fmt.Sprintf("%s:%s@tcp(%s)/%s", Username, Password, Address, DatabaseName))
+		//fmt.Sprintf("%s:%s@tcp(%s)/%s", Username, Password, Address, DatabaseName)
+		DB, err = mysql.Connect()
 		if err != nil {
 			return nil, err
 		}
