@@ -94,7 +94,7 @@ func (h *HTTPHandler) statusComplete(requirementID int) {
 }
 
 func (h *HTTPHandler) statusIncomplete(requirementID int) {
-	if err := h.database.UpdateData(fmt.Sprintf("UPDATE requirements SET status =' 0' WHERE requirementid = %d;",
+	if err := h.database.UpdateData(fmt.Sprintf("UPDATE requirements SET status = '0' WHERE requirementid = %d;",
 		requirementID)); err != nil {
 		h.logger.ErrorLogger.Println("Can't modify database : ", err.Error())
 	}
