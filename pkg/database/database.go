@@ -2,11 +2,8 @@ package database
 
 import (
 	"database/sql"
-	mysql "delivery-validation/pkg/database/mysql"
-	"errors"
-	"fmt"
+	psql "delivery-validation/pkg/database/psql"
 	"log"
-	"strings"
 )
 
 type DBInstance struct {
@@ -18,18 +15,12 @@ type RetrievedData struct {
 }
 
 //, Username string, Password string, Address string, DatabaseName string
-func NewDatabase(DatabaseManagementSystem string) (*DBInstance, error) {
+func NewDatabase(URL string) (*DBInstance, error) {
 	var DB *sql.DB
 	var err error
-	switch strings.ToLower(DatabaseManagementSystem) {
-	case "postgres":
-		//fmt.Sprintf("%s:%s@tcp(%s)/%s", Username, Password, Address, DatabaseName)
-		DB, err = mysql.Connect()
-		if err != nil {
-			return nil, err
-		}
-	default:
-		return nil, errors.New(fmt.Sprintf("%s database is not implemented", DatabaseManagementSystem))
+	DB, err = psql.Connect(URL)
+	if err != nil {
+		return nil, err
 	}
 	return &DBInstance{DB}, nil
 }

@@ -15,25 +15,12 @@ func main() {
 	logger := logger.NewLogger("log.txt")
 	logger.InfoLogger.Println("Reading database configuration")
 
-	/*
-		databaseConfig, err := config.LoadDatabaseConfiguration()
-		if err != nil {
-			log.Printf("Error setting database : %s\n", err.Error())
-			return
-		}
-	*/
+	databaseConfig := config.LoadDatabaseConfiguration()
+	port := config.LoadPort()
 
 	//initializing db and router
 	logger.InfoLogger.Println("Initializing Program")
-
-	// databaseConfig, err := config.LoadDatabaseConfiguration()
-	// if err != nil {
-	// 	log.Printf("Error setting database : %s\n", err.Error())
-	// 	return
-
-	// }
-
-	database, err := database.NewDatabase("postgres")
+	database, err := database.NewDatabase(databaseConfig)
 
 	if err != nil {
 		log.Printf("Error received : %s\n", err.Error())
@@ -43,7 +30,6 @@ func main() {
 	router := router.NewRouterInstance()
 	handlers := handlers.NewHttpHandlers(database, router, logger)
 	handlers.RegisterAllHandlers()
-	port := config.LoadPort()
 	// port := "8080"
 	fmt.Println("Server starting at " + port)
 	router.Start(port)

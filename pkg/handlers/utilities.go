@@ -3,8 +3,14 @@ package handlers
 import (
 	"delivery-validation/pkg/database"
 	"delivery-validation/pkg/models"
+	"errors"
 	"fmt"
 )
+
+func (h *HTTPHandler) deleteOrder(orderID string) {
+	h.database.DeleteData(fmt.Sprintf("DELETE FROM requirements WHERE order_id=%s", orderID))
+	h.database.DeleteData(fmt.Sprintf("DELETE FROM orders WHERE id=%s", orderID))
+}
 
 func (h *HTTPHandler) retrieveRequirements(order *models.Orders, id int) {
 	retrievedRequirements, err := h.database.RetrieveData(fmt.Sprintf("SELECT requirementid, request, expectedoutcome, status FROM requirements WHERE order_id = %d", id))
@@ -24,7 +30,7 @@ func (h *HTTPHandler) retrieveRequirements(order *models.Orders, id int) {
 	}
 }
 
-func (h *HTTPHandler) retrieveOrders(retrievedData *database.RetrievedData) []models.Orders {
+func (h *HTTPHandler) retrieveOrders(retrievedData *database.RetrievedData) ([]models.Orders, error) {
 	var response []models.Orders
 	for retrievedData.Data.Next() {
 		var each models.Orders
@@ -35,7 +41,10 @@ func (h *HTTPHandler) retrieveOrders(retrievedData *database.RetrievedData) []mo
 		h.retrieveRequirements(&each, each.Id)
 		response = append(response, each)
 	}
-	return response
+	if len(response) == 0 {
+		return response, errors.New("Order Not Found!")
+	}
+	return response, nil
 }
 
 func (h *HTTPHandler) insertOrderAndRetrieveID(newOrder models.Orders) int {
@@ -69,7 +78,8 @@ func (h *HTTPHandler) validateRequirements(id string, form models.ProgressForm) 
 		h.logger.ErrorLogger.Println("Database Error : ", err.Error())
 		return
 	}
-	order := h.retrieveOrders(retrievedData)[0]
+	orders, err := h.retrieveOrders(retrievedData)
+	order := orders[0]
 	for _, resp := range form.Fufillments {
 		for _, requirement := range order.Requirements {
 			if requirement.Requirementid == int(resp.Requirementid) {
