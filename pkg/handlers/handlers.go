@@ -28,6 +28,7 @@ func (h *HTTPHandler) RegisterAllHandlers() {
 	h.Router.RegisterHandler("/orders", h.AddNewOrder, "POST")
 	h.Router.RegisterHandler("/orders/id={id}", h.GetStatusOfOrder, "GET")
 	h.Router.RegisterHandler("/orders/id={id}", h.PostUpdateOnDelivery, "POST")
+	h.Router.RegisterHandler("/orders/id={id}", h.DeleteDelivery, "DELETE")
 }
 
 func (h *HTTPHandler) Index(w http.ResponseWriter, r *http.Request) {
